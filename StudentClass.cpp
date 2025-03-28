@@ -166,8 +166,8 @@ vector<string> loadFromFile(const string &filename) {
     return list;
 }
 
-vector<Student> readStudentsFile(const string &filename) {
-    vector<Student> students;
+vector<StudentClass> readStudentsFile(const string &filename) {
+    vector<StudentClass> students;
     ifstream file(filename);
     try{
     if (!file.is_open()) {
@@ -178,16 +178,24 @@ vector<Student> readStudentsFile(const string &filename) {
 
 
         while (getline(file, line)) {
-            Student student;
+            StudentClass student;
+            string name, surname;
+            vector<uint8_t> grades;
+            uint8_t exam_grade;
+
             std::istringstream iss(line);
-            iss >> student.name >> student.surname;
+            iss >> name >> surname;
             double grade;
             while (iss >> grade) {
-                student.grades.push_back(grade);
+                grades.push_back(grade);
             }
 
-            student.exam_grade = static_cast<int>(student.grades.back());
-            student.grades.pop_back();
+            exam_grade = (grades.back());
+            grades.pop_back();
+            student.setName(name);
+            student.setSurname(surname);
+            student.setGrades(grades);
+            student.setExamGrades(exam_grade);
             calculateFinalGradesAverage(student);
 
             students.push_back(student);
@@ -204,26 +212,26 @@ vector<Student> readStudentsFile(const string &filename) {
 }
 
 
-vector<Student> generateRandomStudents(int count) {
+vector<StudentClass> generateRandomStudents(int count) {
     vector<string> first_names = loadFromFile("first_names.txt");
     vector<string> last_names = loadFromFile("surnames.txt");
-    vector<Student> students;
+    vector<StudentClass> students;
 
     if (first_names.empty() || last_names.empty()) {
         for (int i = 1; i <= count; ++i) {
-            Student student;
-            student.name = "Vardas" + to_string(rand() % count + 1);
-            student.surname = "Pavarde" + to_string(rand() % count + 1);
+            StudentClass student;
+            student.setName("Vardas" + to_string(rand() % count + 1));
+            student.setSurname("Pavarde" + to_string(rand() % count + 1));
             students.push_back(student);
         }
-        return students;
+
     } else {
         /*random_shuffle(first_names.begin(), first_names.end());
         random_shuffle(last_names.begin(), last_names.end());*/
         for (int i = 0; i < count; ++i) {
-            Student student;
-            student.name = first_names[i % first_names.size()];
-            student.surname = last_names[i % last_names.size()];
+            StudentClass student;
+            student.setName(first_names[i % first_names.size()]);
+            student.setSurname(last_names[i % last_names.size()]);
             students.push_back(student);
         }
 
@@ -231,7 +239,7 @@ vector<Student> generateRandomStudents(int count) {
     }
 }
 
-vector<Student> test() {
+vector<StudentClass> test() {
     std::string filename;
     cout << "Kiek studentų norite pridėti? (10000/100000/1000000)" << endl;
     int n;
@@ -240,7 +248,7 @@ vector<Student> test() {
         cout << "Neteisinga įvestis, bandykite dar kartą" << endl;
         cin >> n;
     }
-    auto start = high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
     if (n == 10000) {
         filename.assign("studentai10000.txt");
     } else if (n == 100000) {
@@ -248,7 +256,7 @@ vector<Student> test() {
     } else if (n == 1000000) {
         filename.assign("studentai1000000.txt");
     }
-    vector<Student> students;
+    vector<StudentClass> students;
     ifstream file(filename);
     try{
     if (!file.is_open()) {
@@ -258,22 +266,28 @@ vector<Student> test() {
     std::string line, header;
     getline(file, header);
     while (std::getline(file, line)) {
+      string name, surname;
+      vector<uint8_t> grades;
+      uint8_t exam_grade;
         std::istringstream iss(line);
-        Student student;
+        StudentClass student;
 
-        iss >> student.name >> student.surname;
+        iss >> name >> surname;
 
         double grade;
         while (iss >> grade) {
-            student.grades.push_back(grade);
+            grades.push_back(grade);
         }
 
-        if (!student.grades.empty()) {
-            student.exam_grade = static_cast<int>(student.grades.back());
-            student.grades.pop_back();
-        } else {
-            std::cerr << "Warning: No grades found for student " << student.name << " " << student.surname << std::endl;
+        if (!grades.empty()) {
+            exam_grade = (grades.back());
+            grades.pop_back();
         }
+        student.setName(name);
+        student.setSurname(surname);
+        student.setGrades(grades);
+        student.setExamGrades(exam_grade);
+        calculateFinalGradesAverage(student);
 
         students.push_back(student);
     }
@@ -294,45 +308,39 @@ vector<Student> test() {
     return students;
 }
 
-bool compareByName(const Student a, const Student b) {
-    return a.name < b.name;
+bool compareByName(StudentClass a, StudentClass b) {
+    return a.getName() < b.getName();
 }
 
-bool compareBySurname(const Student a, const Student b) {
-    return a.surname < b.surname;
+bool compareBySurname(StudentClass a, StudentClass b) {
+    return a.getSurname() < b.getSurname();
 }
 
-bool compareByAverage(const Student a, const Student b) {
-    return a.final_grade < b.final_grade;
+bool compareByAverage(StudentClass a, StudentClass b) {
+    return a.getFinalGrade() < b.getFinalGrade();
 }
 
-bool compareByMedian(const Student a, const Student b) {
-    return a.final_grade < b.final_grade;
-}
 
-vector<Student> sortByName(vector<Student> students) {
+vector<StudentClass> sortByName(vector<StudentClass> students) {
     sort(students.begin(), students.end(), compareByName);
     printStudentList(students);
     return students;
 }
 
-vector<Student> sortBySurname(vector<Student> students) {
+vector<StudentClass> sortBySurname(vector<StudentClass> students) {
     sort(students.begin(), students.end(), compareBySurname);
     printStudentList(students);
     return students;
 }
 
-vector<Student> sortByAverage(vector<Student> students) {
+vector<StudentClass> sortByAverage(vector<StudentClass> students) {
     sort(students.begin(), students.end(), compareByAverage);
     return students;
 }
 
-vector<Student> sortByMedian(vector<Student> students) {
-    sort(students.begin(), students.end(), compareByMedian);
-    return students;
-}
-void logDuration(const string& message, const high_resolution_clock::time_point& start, const high_resolution_clock::time_point& stop) {
-    auto duration_ms = duration_cast<milliseconds>(stop - start);
+
+void logDuration(const string& message, const std::chrono::high_resolution_clock::time_point& start, const std::chrono::high_resolution_clock::time_point& stop) {
+    auto duration_ms = duration_cast<std::chrono::milliseconds>(stop - start);
     double duration_s = duration_ms.count() / 1000.0;
     cout << message << fixed << setprecision(10) << duration_s << " sec" << endl;
 }
@@ -346,24 +354,24 @@ void generateStudentsFile(int numberOfStudents){
         return;
     }
 
-    auto start = high_resolution_clock::now();
-    vector<Student> students = generateRandomStudents(numberOfStudents);
+    auto start = std::chrono::high_resolution_clock::now();
+    vector<StudentClass> students = generateRandomStudents(numberOfStudents);
     generateGrades(students);
 
-    for (const Student& student : students) {
+    for (StudentClass& student : students) {
         file << student.name << " " << student.surname << "       ";
-        for (const double& grade : student.grades) {
+        for (const double& grade : student.getGrades()) {
             file << grade << " ";
         }
-        file << student.exam_grade << endl;
+        file << student.getExamGrades() << endl;
     }
 
-    auto stop = high_resolution_clock::now();
+    auto stop = std::chrono::high_resolution_clock::now();
     logDuration(filename + " sukūrimo laikas: ", start, stop);
     file.close();
   }
 
-void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
+void sortStudentsInFile(vector<StudentClass>& students,int numberOfStudents) {
 
   string studentsFilename = "students" + to_string(numberOfStudents) + ".txt";
   string kietekaiFilename = "kietekai" + to_string(numberOfStudents) + ".txt";
@@ -372,34 +380,21 @@ void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
   ofstream file1(kietekaiFilename);
   ofstream file2(vargsiukaiFilename);
 
-  auto startRead = high_resolution_clock::now();
+  auto startRead = std::chrono::high_resolution_clock::now();
     students = readStudentsFile(studentsFilename);
-  auto stopRead = high_resolution_clock::now();
+  auto stopRead = std::chrono::high_resolution_clock::now();
   logDuration(to_string(numberOfStudents) + " įrašų iš failo nuskaitymo laikas: ", startRead, stopRead);
 
 
-    auto startSort = high_resolution_clock::now();
+    auto startSort = std::chrono::high_resolution_clock::now();
      students = sortByAverage(students);
 
-	auto stopSort = high_resolution_clock::now();
+	auto stopSort = std::chrono::high_resolution_clock::now();
     logDuration(to_string(numberOfStudents) + " įrašų rūšiavimo laikas: ", startSort, stopSort);
-    /*
-    vector<Student> kietekai;
-    vector<Student> vargsiukai;
-    auto startSplit = high_resolution_clock::now();
-    for (const Student& student : students) {
-        if (student.final_grade < 5.00) {
-            vargsiukai.push_back(student);
-        } else {
-            kietekai.push_back(student);
-        }
-    }
-    auto stopSplit = high_resolution_clock::now();
-    logDuration(to_string(numberOfStudents) + " įrašų padalijimo į du konteinerius laikas vector: ", startSplit, stopSplit);
-  	students.erase(students.begin(), students.end());
 
 
 
+/*
  auto startWrite1 = high_resolution_clock::now();
   for(Student student : kietekai) {
     file1 << student.name << " " << student.surname << "       " << student.final_grade<<endl;
@@ -422,13 +417,13 @@ void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
   file1.close();
   file2.close();
   }
-void strategyTwoVector(vector<Student>& students, vector<Student>& vargsiukai, int num) {
+void strategyTwoVector(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num) {
     timespec start, end;
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     int blogiukai = 0;
 
     for (int i = 0; i < num; i++) {
-        if (students[i].final_grade < 5.00) {
+        if (students[i].getFinalGrade() < 5.00) {
             blogiukai++;
         }
     }
@@ -442,11 +437,11 @@ void strategyTwoVector(vector<Student>& students, vector<Student>& vargsiukai, i
     cout << to_string(num) + "  str 2 irasu dalijimas i vector: "<< elapsed_seconds << "s" << endl;
 
 }
-void strategyThreeVector(vector<Student>& students, vector<Student>& vargsiukai, int num) {
+void strategyThreeVector(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num) {
     timespec start, end;
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    vector<Student>::iterator bound;
-    bound = stable_partition(students.begin(), students.end(), [](const Student& s){return s.final_grade < 5.00;});
+    vector<StudentClass>::iterator bound;
+    bound = stable_partition(students.begin(), students.end(), [](StudentClass& s){return s.getFinalGrade() < 5.00;});
     copy(students.begin() , bound, back_inserter(vargsiukai));
     students.erase(students.begin(), bound);
 

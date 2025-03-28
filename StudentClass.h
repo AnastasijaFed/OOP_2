@@ -9,6 +9,9 @@
 #include <iostream>
 #include <numeric>
 #include <iomanip>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
 using namespace std;
 
     class StudentClass {
@@ -30,6 +33,7 @@ using namespace std;
           double median(StudentClass &student);
           void calculateFinalGradesAverage(StudentClass &student);
           void generateGrades(vector<StudentClass> &students);
+        vector<StudentClass> readStudentsFile(const string &filename);
 
 
           StudentClass();
