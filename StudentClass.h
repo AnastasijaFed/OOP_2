@@ -23,11 +23,13 @@ using namespace std;
           const uint8_t getExamGrades(){return exam_grade;}
           const void setExamGrades(uint8_t grade){this->exam_grade = grade;}
           const void setGrades(vector<uint8_t> grades){this->grades = grades;}
+          void clearGrades(){this->grades.clear();}
           const void setFinalGrade(double finalGrade){this->final_grade = finalGrade;}
           const double getFinalGrade(){return final_grade;}
           double average(StudentClass &student);
           double median(StudentClass &student);
           void calculateFinalGradesAverage(StudentClass &student);
+          void generateGrades(vector<StudentClass> &students);
 
 
           StudentClass();

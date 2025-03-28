@@ -117,23 +117,23 @@ void calculateFinalGradesAverage(StudentClass &student) {
     student.setFinalGrade(final);
 }
 
-void printStudentList(vector<Student> &students) {
+void printStudentList(vector<StudentClass> &students) {
     cout << left << setw(15) << "Pavardė" << setw(10) << "Vardas"
             << setw(15) << "Galutinis (Vid.)" << setw(15) << "Galutinis (Med.)" << endl;
     cout << setfill('-') << setw(55) << "-" << setfill(' ') << endl; // Increased width
 
     for (size_t i = 0; i < students.size(); ++i) {
-        cout << left << setw(15) << students[i].surname << setw(10) << students[i].name;
+        cout << left << setw(15) << students[i].getSurname() << setw(10) << students[i].getName();
 
 
         double medFinal = calculateFinalGradesMedian(students[i]);
 
-        cout << fixed << setprecision(2) << right << setw(15) << students[i].final_grade
-                << fixed << setprecision(2) << right << setw(15) << medFinal << endl;
+        cout << fixed << setprecision(2) << right << setw(15) << students[i].getFinalGrade()<<endl;
+
     }
 }
 
-void generateGrades(vector<Student> &students) {
+void generateGrades(vector<StudentClass> &students) {
     static bool seeded = false;
     if (!seeded) {
         srand(time(0));
@@ -142,12 +142,15 @@ void generateGrades(vector<Student> &students) {
 
     for (auto &student: students) {
         int grades_number = 5;
-        student.grades.clear();
+        student.clearGrades();
+        vector<uint8_t> grades;
         for (int i = 0; i < grades_number; ++i) {
-            student.grades.push_back(rand() % 10 + 1);
+            grades.push_back(rand() % 10 + 1);
         }
-        student.exam_grade = rand() % 10 + 1;
+        student.setGrades(grades);
+        student.setExamGrades(rand() % 10 + 1);
     }
+
 }
 
 vector<string> loadFromFile(const string &filename) {
