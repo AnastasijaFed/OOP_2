@@ -21,6 +21,14 @@ class StudentClass {
       void setFinalGrade(double finalGrade){this->final_grade = finalGrade;}
       double getFinalGrade(){return final_grade;}
 
+      StudentClass(string name, string surname, vector<uint8_t> grades, double finalGrade){
+        this->name = name;
+        this->surname = surname;
+        this->grades = grades;
+        this->final_grade = finalGrade;
+
+        }
+
 
    private:
     std::vector<uint8_t> grades;
