@@ -16,28 +16,46 @@ using namespace std;
 
     class StudentClass {
         public:
-          string name;
-          string surname;
-          string getName(){return name;}
-          string getSurname(){return surname;}
-          const void setName(string name){this->name = name;}
-          const void setSurname(string surname){this->surname = surname;}
-          const vector<uint8_t> getGrades(){return grades;}
-          const uint8_t getExamGrades(){return exam_grade;}
-          const void setExamGrades(uint8_t grade){this->exam_grade = grade;}
-          const void setGrades(vector<uint8_t> grades){this->grades = grades;}
-          void clearGrades(){this->grades.clear();}
-          const void setFinalGrade(double finalGrade){this->final_grade = finalGrade;}
-          const double getFinalGrade(){return final_grade;}
-          double average(StudentClass &student);
-          double median(StudentClass &student);
-          void calculateFinalGradesAverage(StudentClass &student);
-          void generateGrades(vector<StudentClass> &students);
-        vector<StudentClass> readStudentsFile(const string &filename);
+            string name;
+            string surname;
+            string getName(){return name;}
+            string getSurname(){return surname;}
+            const void setName(string name){this->name = name;}
+            const void setSurname(string surname){this->surname = surname;}
+            const vector<double> getGrades(){return grades;}
+            const double getExamGrades(){return exam_grade;}
+            const void setExamGrades(double grade){this->exam_grade = grade;}
+            const void setGrades(vector<double> grades){this->grades = grades;}
+            void clearGrades(){this->grades.clear();}
+            const void setFinalGrade(double finalGrade){this->final_grade = finalGrade;}
+            const double getFinalGrade(){return final_grade;}
+            vector<StudentClass> addStudentsObjects(vector<StudentClass> students);
+            double averageClass(StudentClass &student);
+            double medianClass(StudentClass &student);
+          double calculateFinalGradesMedianClass(StudentClass &student);
+            void calculateFinalGradesAverageClass(StudentClass &student);
+          void printStudentListClass(vector<StudentClass> &students);
+            void generateGradesClass(vector<StudentClass> &students);
+        vector<string> loadFromFileClass(const string &filename);
+          vector<StudentClass> readStudentsFileClass(const string &filename);
+        vector<StudentClass> generateRandomStudentsClass(int count);
+          vector<StudentClass> testClass();
+        bool compareByNameClass(StudentClass a, StudentClass b);
+        bool compareBySurnameClass(StudentClass a, StudentClass b);
+        bool compareByAverageClass(StudentClass a, StudentClass b);
+        vector<StudentClass> sortByNameClass(vector<StudentClass> students);
+        vector<StudentClass> sortBySurnameClass(vector<StudentClass> students);
+        vector<StudentClass> sortByAverageClass(vector<StudentClass> students);
+        void logDuration(const string& message, const std::chrono::high_resolution_clock::time_point& start, const std::chrono::high_resolution_clock::time_point& stop);
+        void generateStudentsFileClass(int numberOfStudents);
+        void sortStudentsInFileClass(vector<StudentClass>& students,int numberOfStudents);
+        void strategyTwoVectorClass(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num);
+        void strategyThreeVector(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num);
+
 
 
           StudentClass();
-          StudentClass(string name, string surname, vector<uint8_t> grades, uint8_t exam_grade, double finalGrade){
+          StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade){
             this->name = name;
             this->surname = surname;
             this->grades = grades;
@@ -49,8 +67,8 @@ using namespace std;
 
 
        private:
-        std::vector<uint8_t> grades;
-        uint8_t exam_grade;
+        std::vector<double> grades;
+        double exam_grade;
         mutable double final_grade;
     };
 
