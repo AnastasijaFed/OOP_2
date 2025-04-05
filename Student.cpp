@@ -180,10 +180,16 @@ int main() {
         }
         case 7:
         {
-            students2 = test();
-            for (auto& student : students2) {
-                students.push_back(student);
-            }
+            cout<<"klases"<<endl;
+            studentsClass2.clear();
+            studentClass.sortStudentsInFileClass(studentsClass2, 100000);
+            studentsClass2.clear();
+            studentClass.sortStudentsInFileClass(studentsClass2, 1000000);
+            studentsClass2.clear();
+            cout<<"Strukturos"<<endl;
+            sortStudentsInFile(students,100000);
+            students.clear();
+            sortStudentsInFile(students,1000000);
             break;
         }
             case 8:
@@ -497,13 +503,13 @@ int main() {
         }
         case 7:
         {
-            students2 = test();
-            for (auto& student : students2) {
-                students.push_back(student);
-            }
+            sortStudentsInFile(students,100000);
+            sortStudentsInFile(students,1000000);
+
             break;
-        }
-            case 8:
+            }
+
+        case 8:
         {
             vector<Student> students;
     vector<Student> vargsiukai3;

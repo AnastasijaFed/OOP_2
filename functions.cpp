@@ -351,11 +351,11 @@ void generateStudentsFile(int numberOfStudents){
 void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
 
   string studentsFilename = "students" + to_string(numberOfStudents) + ".txt";
-  string kietekaiFilename = "kietekai" + to_string(numberOfStudents) + ".txt";
-  string vargsiukaiFilename = "vargsiukai" + to_string(numberOfStudents) + ".txt";
+  /*string kietekaiFilename = "kietekai" + to_string(numberOfStudents) + ".txt";
+  string vargsiukaiFilename = "vargsiukai" + to_string(numberOfStudents) + ".txt";*/
 
-  ofstream file1(kietekaiFilename);
-  ofstream file2(vargsiukaiFilename);
+  /*ofstream file1(kietekaiFilename);
+  ofstream file2(vargsiukaiFilename);*/
 
   auto startRead = high_resolution_clock::now();
     students = readStudentsFile(studentsFilename);
@@ -368,9 +368,10 @@ void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
 
 	auto stopSort = high_resolution_clock::now();
     logDuration(to_string(numberOfStudents) + " įrašų rūšiavimo laikas: ", startSort, stopSort);
+    vector<Student> vargsiukai;
+    strategyThreeVector(students,vargsiukai, numberOfStudents);
     /*
     vector<Student> kietekai;
-    vector<Student> vargsiukai;
     auto startSplit = high_resolution_clock::now();
     for (const Student& student : students) {
         if (student.final_grade < 5.00) {
@@ -404,8 +405,8 @@ void sortStudentsInFile(vector<Student>& students,int numberOfStudents) {
 
 
 
-  file1.close();
-  file2.close();
+  /*file1.close();
+  file2.close();*/
   }
 void strategyTwoVector(vector<Student>& students, vector<Student>& vargsiukai, int num) {
     timespec start, end;

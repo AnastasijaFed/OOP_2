@@ -359,33 +359,12 @@ void StudentClass::sortStudentsInFileClass(vector<StudentClass> &students, int n
     auto stopSort = high_resolution_clock::now();
     logDuration(to_string(numberOfStudents) + " įrašų rūšiavimo laikas: ", startSort, stopSort);
 
-    vector<StudentClass> kietekai;
+
     vector<StudentClass> vargsiukai;
-    auto startSplit = high_resolution_clock::now();
-    for (StudentClass &student : students) {
-        if (student.getFinalGrade() < 5.00) {
-            vargsiukai.push_back(student);
-        } else {
-            kietekai.push_back(student);
-        }
-    }
-    auto stopSplit = high_resolution_clock::now();
-    logDuration(to_string(numberOfStudents) + " įrašų padalijimo į du konteinerius laikas vector: ", startSplit, stopSplit);
+    strategyThreeVector(students, vargsiukai, numberOfStudents);
+
     students.erase(students.begin(), students.end());
 
-    auto startWrite1 = high_resolution_clock::now();
-    for (StudentClass student : kietekai) {
-        file1 << student.getName() << " " << student.getSurname() << "       " << student.getFinalGrade() << endl;
-    }
-    auto stopWrite1 = high_resolution_clock::now();
-    logDuration(to_string(numberOfStudents) + " įrašymo į " + kietekaiFilename + " laikas: ", startWrite1, stopWrite1);
-
-    auto startWrite2 = high_resolution_clock::now();
-    for (StudentClass student : vargsiukai) {
-        file2 << student.getName() << " " << student.getSurname() << "       " << student.getFinalGrade() << endl;
-    }
-    auto stopWrite2 = high_resolution_clock::now();
-    logDuration(to_string(numberOfStudents) + " įrašymo į " + vargsiukaiFilename + " laikas: ", startWrite2, stopWrite2);
 
     file1.close();
     file2.close();
