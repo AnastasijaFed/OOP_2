@@ -145,6 +145,7 @@ void StudentClass::generateGradesClass(vector<StudentClass> &students) {
             student.setGrades(newGrades);
         }
         student.setExamGrades(rand() % 10 + 1);
+        calculateFinalGradesAverageClass(student);
     }
 }
 
@@ -181,7 +182,7 @@ vector<StudentClass> StudentClass::readStudentsFileClass(const string &filename)
                     tempGrades.push_back(grade);
                 }
 
-                student.setExamGrades(static_cast<int>(tempGrades.back()));
+                student.setExamGrades((tempGrades.back()));
                 tempGrades.pop_back();
                 student.setGrades(tempGrades);
                 calculateFinalGradesAverageClass(student);
@@ -199,11 +200,9 @@ vector<StudentClass> StudentClass::readStudentsFileClass(const string &filename)
 }
 
 vector<StudentClass> StudentClass::generateRandomStudentsClass(int count) {
-    vector<string> first_names = loadFromFileClass("first_names.txt");
-    vector<string> last_names = loadFromFileClass("surnames.txt");
     vector<StudentClass> students;
 
-    if (first_names.empty() || last_names.empty()) {
+
         for (int i = 1; i <= count; ++i) {
             StudentClass student;
             student.name = "Vardas" + to_string(rand() % count + 1);
@@ -211,16 +210,10 @@ vector<StudentClass> StudentClass::generateRandomStudentsClass(int count) {
             students.push_back(student);
         }
         return students;
-    } else {
-        for (int i = 0; i < count; ++i) {
-            StudentClass student;
-            student.name = first_names[i % first_names.size()];
-            student.surname = last_names[i % last_names.size()];
-            students.push_back(student);
-        }
-        return students;
+
+
     }
-}
+
 
 vector<StudentClass> StudentClass::testClass() {
     std::string filename;

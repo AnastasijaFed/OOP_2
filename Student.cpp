@@ -10,6 +10,7 @@ using namespace std;
 int main() {
     vector<Student> students;
     vector<StudentClass> studentsClass;
+    vector<StudentClass> studentsClass2;
     StudentClass studentClass;
     vector<Student> students2;
     int menu_choice, struct_choice;
@@ -37,7 +38,7 @@ int main() {
         cout << "9 - Baigti darbą\n";
         cout << "Jūsų pasirinkimas: ";
         cin >> menu_choice;
-        while (cin.fail() || menu_choice < 1 || menu_choice > 8) {
+        while (cin.fail() || menu_choice < 1 || menu_choice > 9) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Neteisingas pasirinkimas. Bandykite dar kartą.\n";
@@ -57,11 +58,12 @@ int main() {
             }
             break;
         case 2:
-            if (students.empty()) {
+            if (studentsClass.empty()) {
                 cout << "Pirmiausia sugeneruokite studentus arba įveskite ranka.\n";
             }
             else {
-                generateGrades(students);
+                studentClass.generateGradesClass(studentsClass);
+                studentClass.printStudentListClass(studentsClass);
             }
             break;
         }
@@ -74,21 +76,22 @@ int main() {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
-            students2 = generateRandomStudents(count);
-            generateGrades(students2);
-            for (auto& student : students2) {
-                students.push_back(student);
+            studentsClass2 = studentClass.generateRandomStudentsClass(count);
+            studentClass.generateGradesClass(studentsClass2);
+            for (auto& student : studentsClass2) {
+                studentsClass.push_back(student);
             }
+            studentClass.printStudentListClass(studentsClass);
             break;
         }
         case 4:
         {
-            students2 = readStudentsFile(std::string("kursiokai.txt"));
-            for (auto& student : students2) {
-                students.push_back(student);
+            studentsClass2 = studentClass.readStudentsFileClass(std::string("/Users/anastasijafedorenko/Desktop/OOP1.1/cmake-build-debug/kursiokai.txt"));
+            for (auto& student : studentsClass2) {
+                studentsClass.push_back(student);
             }
-            if (!students2.empty()) {
-                printStudentList(students);
+            if (!studentsClass.empty()) {
+               studentClass.printStudentListClass(studentsClass);
             }
 
             break;
@@ -100,8 +103,7 @@ int main() {
             cout << "1-Pagal vardą: \n";
             cout << "2-Pagal pavardę: \n";
             cout << "3-Pagal galutinį vidurkį: \n";
-            cout << "4-Pagal medianą: \n";
-            if (students.empty()) {
+            if (studentsClass.empty()) {
                 cout << "Sąraše nėra studentų";
             }
             else {
@@ -113,21 +115,18 @@ int main() {
                     cin >> answ;
                 }
                 if (answ == 1) {
-                    students = sortByName(students);
-                    printStudentList(students);
+                    studentsClass = studentClass.sortByNameClass(studentsClass);
+                    studentClass.printStudentListClass(studentsClass);
                 }
                 else if (answ == 2) {
-                    students = sortBySurname(students);
-                    printStudentList(students);
+                    studentsClass = studentClass.sortBySurnameClass(studentsClass);
+                    studentClass.printStudentListClass(studentsClass);
                 }
                 else if (answ == 3) {
-                    students = sortByAverage(students);
-                    printStudentList(students);
+                    studentsClass = studentClass.sortByAverageClass(studentsClass);
+                    studentClass.printStudentListClass(studentsClass);
                 }
-                else if (answ == 4) {
-                    students = sortByMedian(students);
-                    printStudentList(students);
-                }
+
             }
             break;
         }
