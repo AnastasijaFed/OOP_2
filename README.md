@@ -1,4 +1,73 @@
+v1.1
+Struct duomenų tipas pakeistas į klases. Atliktas spartos tyrimas atlikant įrašų nuskaitymą iš failo, rūšiavimą ir dalijimą naudojant trečią strategiją (iš praeito tyrimo) naudojant vector konteinerį ir lyginanama pagal skirtingas kompiliavimo flag'ais (pateikti 5 bandymų vidurkiai)
 
+-O3 flag'as (.exe failo dydis 334KB)
+
+Skaitymas:
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.2694| 0.52 |  
+   | 1000000 | 2.6156 | 1.109 | 
+
+Rūšiavimas:
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.236| 0.142 |  
+   | 1000000 | 2.4194 | 1.4534 | 
+
+Dalijimas į konteinerius
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.00891175|  8.61754E-5  |  
+   | 1000000 | 0.0840014832 | 0.0010766084 | 
+
+
+-O2 flag'as (.exe failo dydis 335KB)
+
+Skaitymas:
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.2518| 0.168 |  
+   | 1000000 | 2.4036 | 1.7048 | 
+
+Rūšiavimas:
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.2168| 0.1078 |  
+   | 1000000 | 2.2218 | 1.1678 | 
+
+Dalijimas į konteinerius
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.0078411084|  0.0046912498  |  
+   | 1000000 | 0.074090567 | 0.0627567658| 
+
+-O1 flag'as (failo dydis 812KB)
+
+Skaitymas:
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.338| 0.2178 |  
+   | 1000000 | 3.0732 | 2.2194 | 
+
+Rūšiavimas:
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.287| 0.145 |  
+   | 1000000 | 2.9262 | 1.5338| 
+
+Dalijimas į konteinerius
+
+| Įrašų skaičius faile | Klasės | Struktūros | 
+   |---------|------|-----------------|
+   | 100000 | 0.0102535416|  0.0088353666  |  
+   | 1000000 | 0.0951730582 | 0.1314340166| 
+   
 
 <<<<<<< HEAD
 # OOP_2uzd
