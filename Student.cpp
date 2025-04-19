@@ -363,6 +363,28 @@ int main() {
             }
             cout<<student4.getExamGrades() <<" "<< student4.getFinalGrade()<<endl;
 
+            cout << "Move constructor testas:  "<<endl;
+            cout << "-----------------------------------------------------------"<<endl;
+            StudentClass student5("Vardenis", "Pavardenis", {6, 7, 8}, 10, 0);
+            student5.calculateFinalGradesAverageClass(student5);
+            cout << "Student5 : " << student5.getName() <<" "<< student5.getSurname()<< " ";
+            for (auto grade : student5.getGrades()) {
+                cout << grade << " ";
+            }
+            cout<<student5.getExamGrades() <<" "<< student5.getFinalGrade()<<endl;
+            StudentClass student6 = move(student5);
+            cout << "Student6 su move : " << student6.getName() <<" "<< student6.getSurname()<< " ";
+            for (auto grade : student6.getGrades()) {
+                cout << grade << " ";
+            }
+            cout<<student6.getExamGrades() <<" "<< student6.getFinalGrade()<<endl;
+            if (student5.getName().empty() && student5.getSurname().empty() && student5.getGrades().empty()) {
+                cout << "Move konstruktorius suveike\n";
+            } else {
+                cout << "Move konstruktorius nesuveike\n";
+            }
+
+
 
             break;
         }
