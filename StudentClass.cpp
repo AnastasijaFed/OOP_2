@@ -162,6 +162,25 @@ vector<string> StudentClass::loadFromFileClass(const string &filename) {
     return list;
 }
 
+ void StudentClass::writeStudentsToFile(const vector<StudentClass>& students, const string& filename) {
+    std::ofstream outputFile(filename);
+
+    if (!outputFile.is_open()) {
+        std::cerr << "Error: Could not open file for writing: " << filename << std::endl;
+        return;
+    }
+
+
+
+    for (const StudentClass& student : students) {
+        outputFile << student.getName() << " " << student.getSurname() <<" " << student.getFinalGrade() << endl;
+    }
+
+    outputFile.flush();
+    outputFile.close();
+
+}
+
 vector<StudentClass> StudentClass::readStudentsFileClass(const string &filename) {
     vector<StudentClass> students;
     ifstream file(filename);
@@ -342,12 +361,6 @@ void StudentClass::generateStudentsFileClass(int numberOfStudents) {
 
 void StudentClass::sortStudentsInFileClass(vector<StudentClass> &students, int numberOfStudents) {
     string studentsFilename = "students" + to_string(numberOfStudents) + ".txt";
-    string kietekaiFilename = "kietekai" + to_string(numberOfStudents) + ".txt";
-    string vargsiukaiFilename = "vargsiukai" + to_string(numberOfStudents) + ".txt";
-
-    ofstream file1(kietekaiFilename);
-    ofstream file2(vargsiukaiFilename);
-
     auto startRead = high_resolution_clock::now();
     students = readStudentsFileClass(studentsFilename);
     auto stopRead = high_resolution_clock::now();
@@ -360,14 +373,14 @@ void StudentClass::sortStudentsInFileClass(vector<StudentClass> &students, int n
     logDuration(to_string(numberOfStudents) + " įrašų rūšiavimo laikas: ", startSort, stopSort);
 
 
+
     vector<StudentClass> vargsiukai;
     strategyThreeVector(students, vargsiukai, numberOfStudents);
 
     students.erase(students.begin(), students.end());
 
 
-    file1.close();
-    file2.close();
+
 }
 
 void StudentClass::strategyTwoVectorClass(vector<StudentClass> &students, vector<StudentClass> &vargsiukai, int num) {
@@ -402,6 +415,10 @@ void StudentClass::strategyThreeVector(vector<StudentClass> &students, vector<St
     double elapsed_seconds =
         (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
     cout << to_string(num) + "  str 3 irasu dalijimas i vector: " << elapsed_seconds << "s" << endl;
+    string kietekaiFilename = "kietekai" + to_string(num) + ".txt";
+    string vargsiukaiFilename = "vargsiukai" + to_string(num) + ".txt";
+    writeStudentsToFile(vargsiukai, vargsiukaiFilename);
+    writeStudentsToFile(students, kietekaiFilename);
 }
 
 StudentClass::StudentClass() : final_grade(0) {}

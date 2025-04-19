@@ -18,17 +18,17 @@ using namespace std;
         public:
 
 
-            string getName(){return name;}
-            string getSurname(){return surname;}
-            const void setName(string name){this->name = name;}
-            const void setSurname(string surname){this->surname = surname;}
-            const vector<double> getGrades(){return grades;}
-            const double getExamGrades(){return exam_grade;}
-            const void setExamGrades(double grade){this->exam_grade = grade;}
-            const void setGrades(vector<double> grades){this->grades = grades;}
+            string getName()const{return name;}
+            string getSurname()const{return surname;}
+            const void setName(const string name){this->name = name;}
+            const void setSurname(const string surname){this->surname = surname;}
+            const vector<double> getGrades()const{return grades;}
+            const double getExamGrades()const{return exam_grade;}
+            const void setExamGrades(const double grade){this->exam_grade = grade;}
+            const void setGrades(const vector<double> grades){this->grades = grades;}
             void clearGrades(){this->grades.clear();}
-            const void setFinalGrade(double finalGrade){this->final_grade = finalGrade;}
-            const double getFinalGrade(){return final_grade;}
+            const void setFinalGrade(const double finalGrade){this->final_grade = finalGrade;}
+            const double getFinalGrade()const{return final_grade;}
             vector<StudentClass> addStudentsObjects(vector<StudentClass> students);
             double averageClass(StudentClass &student);
             double medianClass(StudentClass &student);
@@ -37,6 +37,7 @@ using namespace std;
           void printStudentListClass(vector<StudentClass> &students);
             void generateGradesClass(vector<StudentClass> &students);
         vector<string> loadFromFileClass(const string &filename);
+      void writeStudentsToFile(const vector<StudentClass>& students, const string& filename);
           vector<StudentClass> readStudentsFileClass(const string &filename);
         vector<StudentClass> generateRandomStudentsClass(int count);
           vector<StudentClass> testClass();
@@ -51,6 +52,7 @@ using namespace std;
         void sortStudentsInFileClass(vector<StudentClass>& students,int numberOfStudents);
         void strategyTwoVectorClass(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num);
         void strategyThreeVector(vector<StudentClass>& students, vector<StudentClass>& vargsiukai, int num);
+
 
 
 
