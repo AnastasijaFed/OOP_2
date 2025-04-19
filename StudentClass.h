@@ -95,6 +95,13 @@ using namespace std;
           exam_grade(student.exam_grade),
           final_grade(student.final_grade)       {}
 
+      friend std::ostream& operator<<(std::ostream& os, const StudentClass& student) {
+            os << student.name << " " << student.surname << " " << student.final_grade;
+            return os;
+          }
+
+
+
 
        private:
         string name;
