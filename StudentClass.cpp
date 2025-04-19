@@ -1,6 +1,21 @@
 #include "functions.h"
 #include "StudentClass.h"
 
+inline std::ostream& operator<<(std::ostream& os, const std::vector<StudentClass>& students) {
+    os << std::left << std::setw(15) << "Pavardė"
+       << std::setw(10) << "Vardas"
+       << std::setw(15) << "Galutinis (Vid.)"<< '\n';
+
+
+    os << std::setfill('-') << std::setw(55) << "-" << std::setfill(' ') << '\n';
+
+    for (const auto& student : students) {
+        os << student << '\n';
+    }
+
+    return os;
+}
+
 std::vector<StudentClass> StudentClass::addStudentsObjects(std::vector<StudentClass> students) {
     char answer;
     std::cout << "Ar norite pridėti naują studentą? (t/n) ";
@@ -61,19 +76,10 @@ void StudentClass::calculateFinalGradesAverageClass(StudentClass &student) {
     student.setFinalGrade(finalGrade);
 }
 
+
+
 void StudentClass::printStudentListClass(vector<StudentClass> &students) {
-    cout << left << setw(15) << "Pavardė" << setw(10) << "Vardas"
-         << setw(15) << "Galutinis (Vid.)" << setw(15) << "Galutinis (Med.)" << endl;
-    cout << setfill('-') << setw(55) << "-" << setfill(' ') << endl; // Increased width
-
-    for (size_t i = 0; i < students.size(); ++i) {
-        cout << left << setw(15) << students[i].getSurname() << setw(10) << students[i].getName();
-
-        double medFinal = calculateFinalGradesMedianClass(students[i]);
-
-        cout << fixed << setprecision(2) << right << setw(15) << students[i].getFinalGrade()
-             << fixed << setprecision(2) << right << setw(15) << medFinal << endl;
-    }
+    cout << students;
 }
 
 void StudentClass::generateGradesClass(vector<StudentClass> &students) {
