@@ -16,8 +16,8 @@ using namespace std;
 
     class StudentClass {
         public:
-            string name;
-            string surname;
+
+
             string getName(){return name;}
             string getSurname(){return surname;}
             const void setName(string name){this->name = name;}
@@ -65,8 +65,32 @@ using namespace std;
             }
             ~StudentClass();
 
+          StudentClass(const StudentClass &student) {
+            this->name = student.name;
+            this->surname = student.surname;
+            this->grades = student.grades;
+            this->exam_grade = student.exam_grade;
+            this->final_grade = student.final_grade;
+          }
+
+      StudentClass& operator=(const StudentClass &student) {
+            if (this == &student) {
+              return *this;
+            }
+            this->name = student.name;
+            this->surname = student.surname;
+            this->grades = student.grades;
+            this->exam_grade = student.exam_grade;
+            this->final_grade = student.final_grade;
+
+            return *this;
+
+          }
+
 
        private:
+        string name;
+        string surname;
         std::vector<double> grades;
         double exam_grade;
         mutable double final_grade;

@@ -35,10 +35,11 @@ int main() {
         cout << "6 - Sukurti failus\n";
         cout << "7 - Testas tik su vektoriais\n";
         cout << "8 - Testas su skirtingais konteineriais\n";
-        cout << "9 - Baigti darbą\n";
+            cout << "9 - Rule of Five testas\n";
+        cout << "10 - Baigti darbą\n";
         cout << "Jūsų pasirinkimas: ";
         cin >> menu_choice;
-        while (cin.fail() || menu_choice < 1 || menu_choice > 9) {
+        while (cin.fail() || menu_choice < 1 || menu_choice > 10) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Neteisingas pasirinkimas. Bandykite dar kartą.\n";
@@ -328,7 +329,25 @@ int main() {
     studentsDeque.clear();
             break;
         }
-        case 9:
+            case 9:
+        {
+            cout << "Copy constructor test:  "<<endl;
+            cout << "-----------------------------------------------------------"<<endl;
+           StudentClass student1("Anastasija", "Fedorenko", {9, 8, 10}, 10, 9.6);
+            cout << "Student1: " << student1.getName() <<" "<< student1.getSurname()<< " ";
+            for (auto grade : student1.getGrades()) {
+                cout << grade << " ";
+            }
+            cout<<student1.getExamGrades() <<" "<< student1.getFinalGrade()<<endl;
+            StudentClass student2 = student1;
+            cout << "Student2: " << student1.getName() <<" "<< student1.getSurname()<< " ";
+            for (auto grade : student1.getGrades()) {
+                cout << grade << " ";
+            }
+            cout<<student1.getExamGrades() <<" "<< student1.getFinalGrade()<<endl;
+            break;
+        }
+        case 10:
         {
             cout << "Programa baigė darbą.\n";
             break;
@@ -343,7 +362,7 @@ int main() {
             printStudentList(students);
         }
         }
-    } while (menu_choice != 9);
+    } while (menu_choice != 10);
 
     }
     else if (struct_choice == 2) {

@@ -406,4 +406,9 @@ void StudentClass::strategyThreeVector(vector<StudentClass> &students, vector<St
 
 StudentClass::StudentClass() : final_grade(0) {}
 
-StudentClass::~StudentClass() {}
+StudentClass::~StudentClass() {
+grades.clear();
+name.clear();
+surname.clear();
+
+}
