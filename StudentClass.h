@@ -99,6 +99,49 @@ using namespace std;
             os << student.name << " " << student.surname << " " << student.final_grade;
             return os;
           }
+      friend std::istream& operator>>(std::istream& is, StudentClass& student) {
+            std::cout << "Vardas: ";
+            is >> student.name;
+
+            std::cout << "Pavardė: ";
+            is >> student.surname;
+
+            int grades_number;
+            std::cout << "Kiek tarpinių pažymių (už namų darbus) norite įvesti?: ";
+            is >> grades_number;
+            while (is.fail() || grades_number < 0) {
+              std::cout << "Neteisinga įvestis. Įveskite teigiamą skaičių: ";
+              is.clear();
+              is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+              is >> grades_number;
+            }
+
+            std::vector<double> tempGrades;
+            if (grades_number > 0) {
+              std::cout << "Pažymiai: ";
+              for (int i = 0; i < grades_number; i++) {
+                int grade;
+                is >> grade;
+                while (is.fail() || grade < 0 || grade > 10) {
+                  std::cout << "Neteisinga įvestis. Įveskite skaičių nuo 0 iki 10: ";
+                  is.clear();
+                  is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                  is >> grade;
+                }
+                tempGrades.push_back(grade);
+              }
+            }
+
+            student.setGrades(tempGrades);
+
+            std::cout << "Egzamino pažymys: ";
+            is >> student.exam_grade;
+
+            student.calculateFinalGradesAverageClass(student);
+
+            return is;
+          }
+
 
 
 

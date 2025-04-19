@@ -1,73 +1,20 @@
 #include "functions.h"
 #include "StudentClass.h"
 
-vector<StudentClass> StudentClass::addStudentsObjects(vector<StudentClass> students) {
+std::vector<StudentClass> StudentClass::addStudentsObjects(std::vector<StudentClass> students) {
     char answer;
-    cout << "Ar norite pridėti naują studentą? (t/n)";
-    cin >> answer;
-    while (std::tolower(answer) != 't' && std::tolower(answer) != 'n') {
-        cout << "Toks atsakymas negalimas. Bandykite iš naujo.";
-        cout << "Ar norite pridėti naują studentą? (t/n)";
-        cin >> answer;
-    }
+    std::cout << "Ar norite pridėti naują studentą? (t/n) ";
+    std::cin >> answer;
 
     while (std::tolower(answer) == 't') {
         StudentClass student;
-
-        cout << "Vardas: " << endl;
-        cin >> student.name;
-
-        cout << "Pavardė: " << endl;
-        cin >> student.surname;
-        int grades_number;
-        cout << "Kiek tarpinių pažymių (už namų darbus) norite įvesti?: " << endl;
-        cin >> grades_number;
-        while (cin.fail() || grades_number < 0) {
-            cout << "Neteisinga įvestis. Įveskite teigiamą skaičių: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> grades_number;
-        }
-
-        if (grades_number > 0) {
-            cout << "Pažymiai: " << endl;
-            vector<double> tempGrades;
-            for (int i = 1; i <= grades_number; i++) {
-                int grade = 0;
-                cin >> grade;
-                while (cin.fail() || grade < 0 || grade > 10) {
-                    cout << "Neteisinga įvestis. Įveskite skaičių nuo 0 iki 10: ";
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cin >> grade;
-                }
-                tempGrades.push_back(grade);
-            }
-            student.setGrades(tempGrades);
-        } else {
-            cout << "Studentas neturi tarpinių pažymių." << endl;
-        }
-        cout << "Egzamino pažymys: " << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cin >> student.exam_grade;
-        /*while (cin.fail() || student.exam_grade < 0 || student.exam_grade > 10) {
-            cout << "Neteisinga įvestis. Įveskite skaičių: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> student.exam_grade;
-        }*/
-        calculateFinalGradesAverageClass(student);
+        std::cin >> student;
         students.push_back(student);
 
-        cout << "Ar norite pridėti naują studentą? (t/n)";
-        cin >> answer;
-        while (std::tolower(answer) != 't' && std::tolower(answer) != 'n') {
-            cout << "Toks atsakymas negalimas. Bandykite iš naujo.";
-            cout << "Ar norite pridėti naują studentą? (t/n)";
-            cin >> answer;
-        }
-        if (answer == 'n') { break; }
+        std::cout << "Ar norite pridėti naują studentą? (t/n) ";
+        std::cin >> answer;
     }
+
     return students;
 }
 
@@ -162,24 +109,22 @@ vector<string> StudentClass::loadFromFileClass(const string &filename) {
     return list;
 }
 
- void StudentClass::writeStudentsToFile(const vector<StudentClass>& students, const string& filename) {
+void StudentClass::writeStudentsToFile(const std::vector<StudentClass>& students, const std::string& filename) {
     std::ofstream outputFile(filename);
 
     if (!outputFile.is_open()) {
-        std::cerr << "Error: Could not open file for writing: " << filename << std::endl;
+        std::cerr << "Klaida: failo negalima atidaryti " << filename << std::endl;
         return;
     }
 
-
-
     for (const StudentClass& student : students) {
-        outputFile << student.getName() << " " << student.getSurname() <<" " << student.getFinalGrade() << endl;
+        outputFile << student << std::endl;
     }
 
     outputFile.flush();
     outputFile.close();
-
 }
+
 
 vector<StudentClass> StudentClass::readStudentsFileClass(const string &filename) {
     vector<StudentClass> students;
