@@ -86,6 +86,12 @@ using namespace std;
             return *this;
 
           }
+      StudentClass(StudentClass&& student) noexcept
+        : name(std::move(student.name)),
+          surname(std::move(student.surname)),
+          grades(std::move(student.grades)),
+          exam_grade(student.exam_grade),
+          final_grade(student.final_grade)       {}
 
 
        private:
