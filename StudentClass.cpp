@@ -356,11 +356,5 @@ void StudentClass::strategyThreeVector(vector<StudentClass> &students, vector<St
     writeStudentsToFile(students, kietekaiFilename);
 }
 
-StudentClass::StudentClass() : final_grade(0) {}
 
-StudentClass::~StudentClass() {
-grades.clear();
-name.clear();
-surname.clear();
 
-}

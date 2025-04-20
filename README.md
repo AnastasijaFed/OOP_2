@@ -1,3 +1,136 @@
+v1.2
+
+Šioje versijoje buvo realizuoti "Rule of Five" metodai: 
+
+1. Destruktorius: iškviečiamas, kai objektas nustoja egzistuoti, ir atlaisvina objekto užimamą atmintį. Štai jo realizacija:
+   ````
+   StudentClass::~StudentClass() {
+   grades.clear();
+   name.clear();
+   surname.clear();
+
+          }
+   ````
+
+2. Kopijavimo konstruktorius: yra skirtas sukurti naują objektą, kuris yra tiksli kopija jau egzistuojančio objekto:
+
+   ````
+   StudentClass(const StudentClass &student) {
+            this->name = student.name;
+            this->surname = student.surname;
+            this->grades = student.grades;
+            this->exam_grade = student.exam_grade;
+            this->final_grade = student.final_grade;
+          }
+   ````
+3. Kopijavimo priskyrimo operatorius: naudojamas, kai jau egzistuojančiam objektui priskiriamos kito egzistuojančio objekto reikšmės:
+
+````
+StudentClass& operator=(const StudentClass &student) {
+            if (this == &student) {
+              return *this;
+            }
+            this->name = student.name;
+            this->surname = student.surname;
+            this->grades = student.grades;
+            this->exam_grade = student.exam_grade;
+            this->final_grade = student.final_grade;
+
+            return *this;
+
+          }
+````
+4. Perkėlimo konstruktorius: skirtas sukurti naują objektą, perkeliant visus resursus, t.y. senas objektas perduoda visas savo reikšmes naujai sukurtam objektui:
+
+````
+StudentClass(StudentClass&& student) noexcept
+: name(move(student.name)),
+surname(move(student.surname)),
+grades(move(student.grades)),
+exam_grade(student.exam_grade),
+final_grade(student.final_grade)       {}
+
+````
+
+5. Perkėlimo priskyrimo operatorius: naudojamas, kai egzistuojančiam objektui priskiriama laikino (rvalue) objekto reikšmė, perkeliant resursus
+
+````
+ StudentClass& operator=(StudentClass&& student) noexcept {
+            if (this == &student) {
+              return *this;
+            }
+
+            name = move(student.name);
+            surname =move(student.surname);
+            grades = move(student.grades);
+            exam_grade = student.exam_grade;
+            final_grade = student.final_grade;
+            student.exam_grade = 0.0;
+            student.final_grade = 0.0;
+
+            return *this;
+          }
+````
+
+"Rule of five" naudojimas pagerina kodo semantiką ir garantuoja efektyvų perkėlimą, kuris leidžia optimizuoti darbą su laikinais objektais.
+Taip pat šioje versijoje buvo padarytas įvesties/išvesties operatorių perdengimas. Šie nauji metodai leidžia suteikti naują ar papildomą funkcionalumą jau egzistuojantiems 
+operatoriams (šiuo atveju tai yra << ir >>), kad jie sklandžiai veiktų su klase StudentClass. Apžvelkime išvesties operatoriaus perdengimą:
+
+````
+friend ostream& operator<<(ostream& os, const StudentClass& student) {
+            os << left
+               << setw(15) << student.surname
+               << setw(15) << student.name
+               << right
+               << setw(10) << fixed << setprecision(2) << student.final_grade;
+            return os;
+          }
+````
+Šis metodas skirtas supaprastinti StudentClass objektų infromacijos išvedimą tiek į konsolę, tiek į failą. Taigi dabar išvedimo sintaksė atrodo taip:
+
+````
+cout<< student; //student - klasės StudentClass objektas 
+````
+
+Taip pat yra panaudotas įvesties operatoriaus perdengimas:
+````
+friend istream& operator>>(istream& is, StudentClass& student) {
+            student = StudentClass();
+
+            string line;
+            if (!getline(is >> ws, line)) return is;
+
+            istringstream iss(line);
+
+            string namePart, surnamePart;
+            if (!(iss >> namePart >> surnamePart)) return is;
+
+            student.name = namePart;
+            student.surname = surnamePart;
+
+            // Read grades
+            vector<double> grades;
+            double grade;
+            while (iss >> grade) {
+              grades.push_back(grade);
+            }
+
+            if (!grades.empty()) {
+              student.setExamGrades(grades.back());
+              grades.pop_back();
+              student.setGrades(grades);
+              student.calculateFinalGradesAverageClass(student);
+            }
+
+            return is;
+          }
+````
+
+Šis metodas yra universalus, t.y. tinka tiek įvedimui į konsolę, tiek įvedimui į failą. Jis gražina nuorodą į įvesties srautą is, kad būtų galima sujungti >> operacijas. 
+
+Taigi, operatorių perdengimas yra naudingas, nes jis supaprastina kodą, nes visa įvesties/išvesties logika yra inkapsuliuota klasės, o ne išskaidyta po visą programą.
+Taip pat, jei šį kodą naudotų kiti programuotojai, tai supaprastintų jų darbą.
+
 v1.1
 Struct duomenų tipas pakeistas į klases. Atliktas spartos tyrimas atlikant įrašų nuskaitymą iš failo, rūšiavimą ir dalijimą naudojant trečią strategiją (iš praeito tyrimo) naudojant vector konteinerį ir lyginanama pagal skirtingas kompiliavimo flag'ais (pateikti 5 bandymų vidurkiai)
 

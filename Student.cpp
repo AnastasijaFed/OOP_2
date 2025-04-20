@@ -362,6 +362,26 @@ int main() {
             } else {
                 cout << "Move konstruktorius nesuveike\n";
             }
+            cout<<endl;
+            cout << "Move assignment operator testas:  "<<endl;
+            cout << "-----------------------------------------------------------"<<endl;
+            StudentClass student7("Vardenis", "Pavardenis", {6, 7, 8}, 10, 0);
+            student7.calculateFinalGradesAverageClass(student7);
+            cout << "Student7: " <<student7<<endl;
+
+            StudentClass student8("Nevardenis", "Nepavardenis", {3, 4, 5}, 2, 0);
+            student8.calculateFinalGradesAverageClass(student8);
+            cout << "Student8 be move: " <<student8<<endl;
+            cout<<endl;
+            student8 = move(student7);
+            cout << "Student8 su move: " <<student8<<endl;
+
+            if (student7.getName().empty() && student7.getSurname().empty() && student7.getGrades().empty()) {
+                cout << "Move assignment operator suveike\n";
+            } else {
+                cout << "Move assignment operator nesuveike\n";
+            }
+
 
 
 

@@ -55,8 +55,15 @@ using namespace std;
 
 
 
-
-          StudentClass();
+          //default konstruktorius
+          StudentClass() {
+            name = "";
+            surname = "";
+            grades = {};
+            exam_grade = 0;
+            final_grade = 0;
+          };
+        //konstruktorius
           StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade){
             this->name = name;
             this->surname = surname;
@@ -65,8 +72,8 @@ using namespace std;
             this->final_grade = finalGrade;
 
             }
-            ~StudentClass();
 
+          //copy konstruktorius
           StudentClass(const StudentClass &student) {
             this->name = student.name;
             this->surname = student.surname;
@@ -74,7 +81,7 @@ using namespace std;
             this->exam_grade = student.exam_grade;
             this->final_grade = student.final_grade;
           }
-
+  //copy asignment operator
       StudentClass& operator=(const StudentClass &student) {
             if (this == &student) {
               return *this;
@@ -88,12 +95,29 @@ using namespace std;
             return *this;
 
           }
+      //move konstruktorius
       StudentClass(StudentClass&& student) noexcept
         : name(move(student.name)),
           surname(move(student.surname)),
           grades(move(student.grades)),
           exam_grade(student.exam_grade),
           final_grade(student.final_grade)       {}
+      //move assignment operatorius
+      StudentClass& operator=(StudentClass&& student) noexcept {
+            if (this == &student) {
+              return *this;
+            }
+
+            name = move(student.name);
+            surname =move(student.surname);
+            grades = move(student.grades);
+            exam_grade = student.exam_grade;
+            final_grade = student.final_grade;
+            student.exam_grade = 0.0;
+            student.final_grade = 0.0;
+
+            return *this;
+          }
 
       friend ostream& operator<<(ostream& os, const StudentClass& student) {
             os << left
@@ -134,7 +158,12 @@ using namespace std;
 
             return is;
           }
+      StudentClass::~StudentClass() {
+            grades.clear();
+            name.clear();
+            surname.clear();
 
+          }
 
 
        private:
