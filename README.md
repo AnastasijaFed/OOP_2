@@ -10,6 +10,7 @@ v1.2
    surname.clear();
 
           }
+   
    ````
 
 2. Kopijavimo konstruktorius: yra skirtas sukurti naują objektą, kuris yra tiksli kopija jau egzistuojančio objekto:
