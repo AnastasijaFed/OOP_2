@@ -89,69 +89,58 @@ using namespace std;
 
           }
       StudentClass(StudentClass&& student) noexcept
-        : name(std::move(student.name)),
-          surname(std::move(student.surname)),
-          grades(std::move(student.grades)),
+        : name(move(student.name)),
+          surname(move(student.surname)),
+          grades(move(student.grades)),
           exam_grade(student.exam_grade),
           final_grade(student.final_grade)       {}
 
-      friend std::ostream& operator<<(std::ostream& os, const StudentClass& student) {
-            os << student.name << " " << student.surname << " " << student.final_grade;
+      friend ostream& operator<<(ostream& os, const StudentClass& student) {
+            os << left
+               << setw(15) << student.surname
+               << setw(15) << student.name
+               << right
+               << setw(10) << fixed << setprecision(2) << student.final_grade;
             return os;
           }
-      friend std::istream& operator>>(std::istream& is, StudentClass& student) {
-            std::cout << "Vardas: ";
-            is >> student.name;
 
-            std::cout << "Pavardė: ";
-            is >> student.surname;
+      friend istream& operator>>(istream& is, StudentClass& student) {
+            student = StudentClass();
 
-            int grades_number;
-            std::cout << "Kiek tarpinių pažymių (už namų darbus) norite įvesti?: ";
-            is >> grades_number;
-            while (is.fail() || grades_number < 0) {
-              std::cout << "Neteisinga įvestis. Įveskite teigiamą skaičių: ";
-              is.clear();
-              is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-              is >> grades_number;
+            string line;
+            if (!getline(is >> ws, line)) return is;
+
+            istringstream iss(line);
+
+            string namePart, surnamePart;
+            if (!(iss >> namePart >> surnamePart)) return is;
+
+            student.name = namePart;
+            student.surname = surnamePart;
+
+            // Read grades
+            vector<double> grades;
+            double grade;
+            while (iss >> grade) {
+              grades.push_back(grade);
             }
 
-            std::vector<double> tempGrades;
-            if (grades_number > 0) {
-              std::cout << "Pažymiai: ";
-              for (int i = 0; i < grades_number; i++) {
-                int grade;
-                is >> grade;
-                while (is.fail() || grade < 0 || grade > 10) {
-                  std::cout << "Neteisinga įvestis. Įveskite skaičių nuo 0 iki 10: ";
-                  is.clear();
-                  is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                  is >> grade;
-                }
-                tempGrades.push_back(grade);
-              }
+            if (!grades.empty()) {
+              student.setExamGrades(grades.back());
+              grades.pop_back();
+              student.setGrades(grades);
+              student.calculateFinalGradesAverageClass(student);
             }
-
-            student.setGrades(tempGrades);
-
-            std::cout << "Egzamino pažymys: ";
-            is >> student.exam_grade;
-
-            student.calculateFinalGradesAverageClass(student);
 
             return is;
           }
 
 
 
-
-
-
-
        private:
         string name;
         string surname;
-        std::vector<double> grades;
+        ::vector<double> grades;
         double exam_grade;
         mutable double final_grade;
     };

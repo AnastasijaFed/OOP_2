@@ -334,50 +334,29 @@ int main() {
             cout << "Copy constructor testas:  "<<endl;
             cout << "-----------------------------------------------------------"<<endl;
            StudentClass student1("Anastasija", "Fedorenko", {9, 8, 10}, 10, 9.6);
-            cout << "Student1: " << student1.getName() <<" "<< student1.getSurname()<< " ";
-            for (auto grade : student1.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student1.getExamGrades() <<" "<< student1.getFinalGrade()<<endl;
+            cout << "Student1: " <<student1<<endl;
             StudentClass student2 = student1;
-            cout << "Student2: " << student1.getName() <<" "<< student1.getSurname()<< " ";
-            for (auto grade : student1.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student1.getExamGrades() <<" "<< student1.getFinalGrade()<<endl;
+            cout << "Student2: " <<student2<<endl;
+            cout<<endl;
             cout << "Copy assignment operator testas:  "<<endl;
             cout << "-----------------------------------------------------------"<<endl;
             StudentClass student3("Vardenis", "Pavardenis", {6, 7, 8}, 10, 0);
             student3.calculateFinalGradesAverageClass(student3);
-            cout << "Student3: " << student3.getName() <<" "<< student3.getSurname()<< " ";
-            for (auto grade : student3.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student3.getExamGrades() <<" "<< student3.getFinalGrade()<<endl;
+            cout << "Student3: " <<student3<<endl;
+
             StudentClass student4("Nevardenis", "Nepavardenis", {3, 4, 5}, 2, 0);
             student4.calculateFinalGradesAverageClass(student4);
             student4 = student3;
-            cout << "Student4 nukopijuotas: " << student4.getName() <<" "<< student4.getSurname()<< " ";
-            for (auto grade : student4.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student4.getExamGrades() <<" "<< student4.getFinalGrade()<<endl;
-
+            cout << "Student4 nukopijuotas: " <<student4<<endl;
+            cout<<endl;
             cout << "Move constructor testas:  "<<endl;
             cout << "-----------------------------------------------------------"<<endl;
             StudentClass student5("Vardenis", "Pavardenis", {6, 7, 8}, 10, 0);
             student5.calculateFinalGradesAverageClass(student5);
-            cout << "Student5 : " << student5.getName() <<" "<< student5.getSurname()<< " ";
-            for (auto grade : student5.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student5.getExamGrades() <<" "<< student5.getFinalGrade()<<endl;
+            cout << "Student5: " <<student5<<endl;
             StudentClass student6 = move(student5);
-            cout << "Student6 su move : " << student6.getName() <<" "<< student6.getSurname()<< " ";
-            for (auto grade : student6.getGrades()) {
-                cout << grade << " ";
-            }
-            cout<<student6.getExamGrades() <<" "<< student6.getFinalGrade()<<endl;
+            cout << "Student6 su move: " <<student6<<endl;
+            cout<<endl;
             if (student5.getName().empty() && student5.getSurname().empty() && student5.getGrades().empty()) {
                 cout << "Move konstruktorius suveike\n";
             } else {

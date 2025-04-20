@@ -1,13 +1,13 @@
 #include "functions.h"
 #include "StudentClass.h"
 
-inline std::ostream& operator<<(std::ostream& os, const std::vector<StudentClass>& students) {
-    os << std::left << std::setw(15) << "Pavardė"
-       << std::setw(10) << "Vardas"
-       << std::setw(15) << "Galutinis (Vid.)"<< '\n';
+inline ::ostream& operator<<(::ostream& os, const ::vector<StudentClass>& students) {
+    os << ::left << ::setw(15) << "Pavardė"
+       << ::setw(10) << "Vardas"
+       << ::setw(15) << "Galutinis (Vid.)"<< '\n';
 
 
-    os << std::setfill('-') << std::setw(55) << "-" << std::setfill(' ') << '\n';
+    os << ::setfill('-') << ::setw(55) << "-" << ::setfill(' ') << '\n';
 
     for (const auto& student : students) {
         os << student << '\n';
@@ -16,18 +16,21 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<StudentClass
     return os;
 }
 
-std::vector<StudentClass> StudentClass::addStudentsObjects(std::vector<StudentClass> students) {
+::vector<StudentClass> StudentClass::addStudentsObjects(::vector<StudentClass> students) {
     char answer;
-    std::cout << "Ar norite pridėti naują studentą? (t/n) ";
-    std::cin >> answer;
+    cout << "Ar norite pridėti naują studentą? (t/n) ";
+    cin >> answer;
 
-    while (std::tolower(answer) == 't') {
+    while (tolower(answer) == 't') {
+        cout << "Įveskite studento duomenis (vardas, pavardė, pažymiai už ND, egzamino pažymys): "<<endl;
+
         StudentClass student;
-        std::cin >> student;
+        cin.ignore();
+        cin >> student;
         students.push_back(student);
 
-        std::cout << "Ar norite pridėti naują studentą? (t/n) ";
-        std::cin >> answer;
+        cout << "Ar norite pridėti naują studentą? (t/n) ";
+        cin >> answer;
     }
 
     return students;
@@ -53,8 +56,8 @@ double StudentClass::medianClass(StudentClass &student) {
     if (student.getGrades().empty()) {
         return 0.0;
     }
-    std::vector<double> sorted_grades = student.getGrades();
-    std::sort(sorted_grades.begin(), sorted_grades.end());
+    ::vector<double> sorted_grades = student.getGrades();
+    ::sort(sorted_grades.begin(), sorted_grades.end());
 
     size_t middle = sorted_grades.size() / 2;
 
@@ -115,59 +118,40 @@ vector<string> StudentClass::loadFromFileClass(const string &filename) {
     return list;
 }
 
-void StudentClass::writeStudentsToFile(const std::vector<StudentClass>& students, const std::string& filename) {
-    std::ofstream outputFile(filename);
+void StudentClass::writeStudentsToFile(const vector<StudentClass>& students, const string& filename) {
+    ofstream outputFile(filename);
 
     if (!outputFile.is_open()) {
-        std::cerr << "Klaida: failo negalima atidaryti " << filename << std::endl;
+        cerr << "Klaida: failo negalima atidaryti " << filename << endl;
         return;
     }
 
     for (const StudentClass& student : students) {
-        outputFile << student << std::endl;
+        outputFile << student << endl;
     }
 
     outputFile.flush();
     outputFile.close();
 }
 
-
-vector<StudentClass> StudentClass::readStudentsFileClass(const string &filename) {
+vector<StudentClass> StudentClass::readStudentsFileClass(const string& filename) {
     vector<StudentClass> students;
     ifstream file(filename);
-    try {
-        if (!file.is_open()) {
-            throw runtime_error("Nepavyko atidaryti failo.");
-        } else {
-            string header, line;
-            getline(file, header);
 
-            while (getline(file, line)) {
-                StudentClass student;
-                std::istringstream iss(line);
-                iss >> student.name >> student.surname;
-                double grade;
-                vector<double> tempGrades;
-                while (iss >> grade) {
-                    tempGrades.push_back(grade);
-                }
-
-                student.setExamGrades((tempGrades.back()));
-                tempGrades.pop_back();
-                student.setGrades(tempGrades);
-                calculateFinalGradesAverageClass(student);
-
-                students.push_back(student);
-            }
-
-            file.close();
-        }
-    } catch (const runtime_error &e) {
-        cerr << "Klaida skaitant failą: " << e.what() << endl;
+    if (!file.is_open()) {
+        cerr << "Klaida: Nepavyko atidaryti failo: " << filename << endl;
+        return students;
     }
 
+    StudentClass student;
+    while (file >> student) {
+        students.push_back(student);
+    }
+
+    file.close();
     return students;
 }
+
 
 vector<StudentClass> StudentClass::generateRandomStudentsClass(int count) {
     vector<StudentClass> students;
@@ -186,7 +170,7 @@ vector<StudentClass> StudentClass::generateRandomStudentsClass(int count) {
 
 
 vector<StudentClass> StudentClass::testClass() {
-    std::string filename;
+    string filename;
     cout << "Kiek studentų norite pridėti? (10000/100000/1000000)" << endl;
     int n;
     cin >> n;
@@ -206,13 +190,13 @@ vector<StudentClass> StudentClass::testClass() {
     ifstream file(filename);
     try {
         if (!file.is_open()) {
-            throw std::runtime_error("Nepavyko atidaryti failo: " + filename);
+            throw runtime_error("Nepavyko atidaryti failo: " + filename);
         }
 
-        std::string line, header;
+        string line, header;
         getline(file, header);
-        while (std::getline(file, line)) {
-            std::istringstream iss(line);
+        while (getline(file, line)) {
+            istringstream iss(line);
             StudentClass student;
 
             iss >> student.name >> student.surname;
@@ -228,7 +212,7 @@ vector<StudentClass> StudentClass::testClass() {
                 tempGrades.pop_back();
                 student.setGrades(tempGrades);
             } else {
-                std::cerr << "Warning: No grades found for student " << student.name << " " << student.surname << std::endl;
+                cerr << "Warning: No grades found for student " << student.name << " " << student.surname << endl;
             }
 
             students.push_back(student);
@@ -236,8 +220,8 @@ vector<StudentClass> StudentClass::testClass() {
 
         file.close();
 
-        auto stop = std::chrono::high_resolution_clock::now();
-        auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        auto stop = chrono::high_resolution_clock::now();
+        auto duration_ms = ::chrono::duration_cast<::chrono::milliseconds>(stop - start);
 
         double duration_s = duration_ms.count() / 1000.0;
         printStudentListClass(students);
