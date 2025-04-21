@@ -70,48 +70,40 @@ using namespace std;
 
 
           //copy konstruktorius
-          StudentClass(const StudentClass &student) {
-            Human(student.name, student.surname);
-            this->grades = student.grades;
-            this->exam_grade = student.exam_grade;
-            this->final_grade = student.final_grade;
-          }
+      StudentClass(const StudentClass &student)
+    : Human(student.getName(), student.getSurname()),
+      grades(student.grades),
+      exam_grade(student.exam_grade),
+      final_grade(student.final_grade) {}
   //copy asignment operator
       StudentClass& operator=(const StudentClass &student) {
-            if (this == &student) {
-              return *this;
-            }
-            Human(student.name, student.surname);
-            this->grades = student.grades;
-            this->exam_grade = student.exam_grade;
-            this->final_grade = student.final_grade;
-
-            return *this;
-
-          }
+        if (this == &student) return *this;
+        name = student.name;
+        surname = student.surname;
+        grades = student.grades;
+        exam_grade = student.exam_grade;
+        final_grade = student.final_grade;
+        return *this;
+      }
       //move konstruktorius
       StudentClass(StudentClass&& student) noexcept
         : Human(move(student.name), move(student.surname)),
           grades(move(student.grades)),
           exam_grade(student.exam_grade),
-          final_grade(student.final_grade)       {}
+          final_grade(student.final_grade) {}
 
       //move assignment operatorius
       StudentClass& operator=(StudentClass&& student) noexcept {
-            if (this == &student) {
-              return *this;
-            }
-
-            name = move(student.name);
-            surname =move(student.surname);
-            grades = move(student.grades);
-            exam_grade = student.exam_grade;
-            final_grade = student.final_grade;
-            student.exam_grade = 0.0;
-            student.final_grade = 0.0;
-
-            return *this;
-          }
+        if (this == &student) return *this;
+        name = move(student.name);
+        surname = move(student.surname);
+        grades = move(student.grades);
+        exam_grade = student.exam_grade;
+        final_grade = student.final_grade;
+        student.exam_grade = 0;
+        student.final_grade = 0;
+        return *this;
+      }
 
       friend ostream& operator<<(ostream& os, const StudentClass& student) {
             os << left
