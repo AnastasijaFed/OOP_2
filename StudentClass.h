@@ -61,13 +61,13 @@ using namespace std;
             final_grade = 0;
           };
         //konstruktorius
-          StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade){
-            Human(name, surname);
-            this->grades = grades;
-            this->exam_grade = exam_grade;
-            this->final_grade = finalGrade;
+      // StudentClass constructor (correct)
+      StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade)
+          : Human(name, surname),
+            grades(grades),
+            exam_grade(exam_grade),
+            final_grade(finalGrade) {}
 
-            }
 
           //copy konstruktorius
           StudentClass(const StudentClass &student) {
