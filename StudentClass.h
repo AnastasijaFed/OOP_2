@@ -81,8 +81,7 @@ using namespace std;
             if (this == &student) {
               return *this;
             }
-            this->name = student.name;
-            this->surname = student.surname;
+            Human(student.name, student.surname);
             this->grades = student.grades;
             this->exam_grade = student.exam_grade;
             this->final_grade = student.final_grade;
@@ -92,11 +91,11 @@ using namespace std;
           }
       //move konstruktorius
       StudentClass(StudentClass&& student) noexcept
-        : name(move(student.name)),
-          surname(move(student.surname)),
+        : Human(move(student.name), move(student.surname)),
           grades(move(student.grades)),
           exam_grade(student.exam_grade),
           final_grade(student.final_grade)       {}
+
       //move assignment operatorius
       StudentClass& operator=(StudentClass&& student) noexcept {
             if (this == &student) {
@@ -116,8 +115,8 @@ using namespace std;
 
       friend ostream& operator<<(ostream& os, const StudentClass& student) {
             os << left
-               << setw(15) << student.surname
-               << setw(15) << student.name
+               << setw(15) << student.getSurname()
+               << setw(15) << student.getName()
                << right
                << setw(10) << fixed << setprecision(2) << student.final_grade;
             return os;
@@ -134,8 +133,8 @@ using namespace std;
             string namePart, surnamePart;
             if (!(iss >> namePart >> surnamePart)) return is;
 
-            student.name = namePart;
-            student.surname = surnamePart;
+            student.setName(namePart);
+            student.setSurname(surnamePart);
 
             // Read grades
             vector<double> grades;
