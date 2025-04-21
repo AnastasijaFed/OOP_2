@@ -15,5 +15,7 @@ add_executable(OOP_1uzd
     StudentDeque.h
     StudentList.cpp
     StudentList.h
+        Human.cpp
+        Human.h
     StudentClass.cpp
     StudentClass.h)

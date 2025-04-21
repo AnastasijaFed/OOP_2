@@ -118,7 +118,7 @@ using namespace std;
                << setw(15) << student.getSurname()
                << setw(15) << student.getName()
                << right
-               << setw(10) << fixed << setprecision(2) << student.final_grade;
+               << setw(10) << fixed << setprecision(2) << student.getFinalGrade();
             return os;
           }
 
@@ -152,7 +152,7 @@ using namespace std;
 
             return is;
           }
-      StudentClass::~StudentClass() {
+      ~StudentClass() {
             grades.clear();
             exam_grade = 0;
             final_grade = 0;

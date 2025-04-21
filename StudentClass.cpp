@@ -2,12 +2,12 @@
 #include "StudentClass.h"
 
 inline ::ostream& operator<<(::ostream& os, const ::vector<StudentClass>& students) {
-    os << ::left << ::setw(15) << "Pavardė"
-       << ::setw(10) << "Vardas"
-       << ::setw(15) << "Galutinis (Vid.)"<< '\n';
+    os << left << setw(15) << "Pavardė"
+       << setw(10) << "Vardas"
+       << setw(15) << "Galutinis (Vid.)"<< '\n';
 
 
-    os << ::setfill('-') << ::setw(55) << "-" << ::setfill(' ') << '\n';
+    os << setfill('-') << setw(55) << "-" << setfill(' ') << '\n';
 
     for (const auto& student : students) {
         os << student << '\n';
