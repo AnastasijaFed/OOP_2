@@ -3,5 +3,8 @@
 //
 
 #include "Human.h"
-
-Human::Human(std::string name, std::string surname) : name(name), surname(surname) {}
+Human::Human(){
+  name = "";
+  surname = "";
+  }
+Human::Human(string name, string surname) : name(name), surname(surname) {}

@@ -12,16 +12,14 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include "Human.h"
 using namespace std;
 
-    class StudentClass {
+    class StudentClass : public Human {
         public:
 
 
-            string getName()const{return name;}
-            string getSurname()const{return surname;}
-            const void setName(const string name){this->name = name;}
-            const void setSurname(const string surname){this->surname = surname;}
+
             const vector<double> getGrades()const{return grades;}
             const double getExamGrades()const{return exam_grade;}
             const void setExamGrades(const double grade){this->exam_grade = grade;}
@@ -57,16 +55,14 @@ using namespace std;
 
           //default konstruktorius
           StudentClass() {
-            name = "";
-            surname = "";
+            Human();
             grades = {};
             exam_grade = 0;
             final_grade = 0;
           };
         //konstruktorius
           StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade){
-            this->name = name;
-            this->surname = surname;
+            Human(name, surname);
             this->grades = grades;
             this->exam_grade = exam_grade;
             this->final_grade = finalGrade;
@@ -75,8 +71,7 @@ using namespace std;
 
           //copy konstruktorius
           StudentClass(const StudentClass &student) {
-            this->name = student.name;
-            this->surname = student.surname;
+            Human(student.name, student.surname);
             this->grades = student.grades;
             this->exam_grade = student.exam_grade;
             this->final_grade = student.final_grade;
@@ -160,8 +155,8 @@ using namespace std;
           }
       StudentClass::~StudentClass() {
             grades.clear();
-            name.clear();
-            surname.clear();
+            exam_grade = 0;
+            final_grade = 0;
 
           }
 

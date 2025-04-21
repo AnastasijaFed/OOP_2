@@ -6,16 +6,24 @@
 #define HUMAN_H
 
 #include <string>
-
+using namespace std;
 class Human {
 protected:
-    std::string name;
-    std::string surname;
+    string name;
+    string surname;
 
 public:
-    Human(std::string name, std::string surname);
-    virtual void printInfo() const = 0;
-    virtual ~Human() {}
+    Human();
+    Human(string name, string surname);
+    virtual ~Human() {
+        name.clear();
+        surname.clear();
+    }
+
+    string getName()const{return name;}
+    string getSurname()const{return surname;}
+    const void setName(const string name){this->name = name;}
+    const void setSurname(const string surname){this->surname = surname;}
 };
 
 #endif
