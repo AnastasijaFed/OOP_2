@@ -78,8 +78,8 @@ using namespace std;
   //copy asignment operator
       StudentClass& operator=(const StudentClass &student) {
         if (this == &student) return *this;
-        name = student.name;
-        surname = student.surname;
+        Human::setName(student.getName());
+        Human::setSurname(student.getSurname());
         grades = student.grades;
         exam_grade = student.exam_grade;
         final_grade = student.final_grade;
