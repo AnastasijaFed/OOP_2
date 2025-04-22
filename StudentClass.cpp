@@ -160,12 +160,11 @@ vector<StudentClass> StudentClass::generateRandomStudentsClass(int count) {
 
         for (int i = 1; i <= count; ++i) {
             StudentClass student;
-            student.name = "Vardas" + to_string(rand() % count + 1);
-            student.surname = "Pavarde" + to_string(rand() % count + 1);
+            student.setName ("Vardas" + to_string(rand() % count + 1));
+            student.setSurname("Pavarde" + to_string(rand() % count + 1));
             students.push_back(student);
         }
         return students;
-
 
     }
 

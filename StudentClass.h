@@ -62,7 +62,6 @@ using namespace std;
       }
 
             //konstruktorius
-      // StudentClass constructor (correct)
       StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade)
           : Human(name, surname),
             grades(grades),
@@ -112,6 +111,7 @@ using namespace std;
       }
 
       friend ostream& operator<<(ostream& os, const StudentClass& student) {
+
             os << left
                << setw(15) << student.getSurname()
                << setw(15) << student.getName()
