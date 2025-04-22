@@ -6,6 +6,7 @@
 #define HUMAN_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 class Human {
 protected:
@@ -19,6 +20,15 @@ public:
         name.clear();
         surname.clear();
     }
+    Human(Human&& student) noexcept : name(move(student.name)), surname(move(student.surname)) {}
+
+    Human& operator=(Human&& other) noexcept {
+        if (this == &other) return *this;
+        name = std::move(other.name);
+        surname = std::move(other.surname);
+        return *this;
+    }
+
 
     string getName()const{return name;}
     string getSurname()const{return surname;}

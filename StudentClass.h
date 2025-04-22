@@ -87,16 +87,21 @@ using namespace std;
       }
       //move konstruktorius
       StudentClass(StudentClass&& student) noexcept
-        : Human(move(student.name), move(student.surname)),
+        : Human(move(student)),
           grades(move(student.grades)),
           exam_grade(student.exam_grade),
-          final_grade(student.final_grade) {}
+          final_grade(student.final_grade) {
+        student.exam_grade = 0.0;
+        student.final_grade = 0.0;
+        student.grades.clear();
+        student.name.clear();
+        student.surname.clear();
+      }
 
       //move assignment operatorius
       StudentClass& operator=(StudentClass&& student) noexcept {
         if (this == &student) return *this;
-        name = move(student.name);
-        surname = move(student.surname);
+        Human::operator=(move(student));
         grades = move(student.grades);
         exam_grade = student.exam_grade;
         final_grade = student.final_grade;
