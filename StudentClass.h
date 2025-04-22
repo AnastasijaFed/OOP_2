@@ -54,13 +54,14 @@ using namespace std;
 
 
           //default konstruktorius
-          StudentClass() {
-            Human();
-            grades = {};
-            exam_grade = 0;
-            final_grade = 0;
-          };
-        //konstruktorius
+      StudentClass() : Human(), grades{}, exam_grade(0), final_grade(0) {}
+
+      void printInfo() override {
+          cout << "Vardas: " << getName() << ", Pavarde: " << getSurname()
+               << ", Gal. pazymys: " << fixed << setprecision(2) << getFinalGrade() << endl;
+      }
+
+            //konstruktorius
       // StudentClass constructor (correct)
       StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade)
           : Human(name, surname),

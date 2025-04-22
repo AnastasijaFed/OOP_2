@@ -3,6 +3,5 @@
 //
 
 #include "Human.h"
-Human::Human(){
-  }
+
 Human::Human(string name, string surname) : name(name), surname(surname) {}

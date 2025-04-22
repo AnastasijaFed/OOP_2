@@ -14,12 +14,12 @@ protected:
     string surname;
 
 public:
-    Human();
+    Human() = default;
     Human(string name, string surname);
-    virtual ~Human() {
-        name.clear();
-        surname.clear();
-    }
+    virtual ~Human() =default;
+
+    virtual void printInfo() = 0;
+
     Human(Human&& student) noexcept : name(move(student.name)), surname(move(student.surname)) {}
 
     Human& operator=(Human&& other) noexcept {

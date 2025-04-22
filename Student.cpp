@@ -2,6 +2,7 @@
 #include "StudentList.h"
 #include "StudentDeque.h"
 #include "StudentClass.h"
+#include "Human.h"
 using namespace std;
 
 
@@ -331,6 +332,7 @@ int main() {
         }
             case 9:
         {
+            Human human;
             cout << "Copy constructor testas:  "<<endl;
             cout << "-----------------------------------------------------------"<<endl;
            StudentClass student1("Anastasija", "Fedorenko", {9, 8, 10}, 10, 9.6);

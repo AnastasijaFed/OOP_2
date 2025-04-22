@@ -81,6 +81,7 @@ void StudentClass::calculateFinalGradesAverageClass(StudentClass &student) {
 
 
 
+
 void StudentClass::printStudentListClass(vector<StudentClass> &students) {
     cout << students;
 }
@@ -355,6 +356,8 @@ void StudentClass::strategyThreeVector(vector<StudentClass> &students, vector<St
     writeStudentsToFile(vargsiukai, vargsiukaiFilename);
     writeStudentsToFile(students, kietekaiFilename);
 }
+
+
 
 
 

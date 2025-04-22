@@ -1,3 +1,10 @@
+v1.5
+
+Programa buvo papildyta nauja klase Human, o klasė StudentClass tapo išvestine 
+iš jos. Abstrakčios klasės objektai negali būti sukurti:
+
+
+
 v1.2
 
 Šioje versijoje buvo realizuoti "Rule of Five" metodai: 
