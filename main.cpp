@@ -1,7 +1,7 @@
 #include "functions.h"
-#include "StudentList.h"
-#include "StudentDeque.h"
-#include "StudentClass.h"
+#include "modules/StudentList.h"
+#include "modules/StudentDeque.h"
+#include "modules/StudentClass.h"
 #include "Human.h"
 using namespace std;
 
