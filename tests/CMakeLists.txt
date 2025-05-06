@@ -1,18 +1,20 @@
-cmake_minimum_required(VERSION 3.10)
-project(OOP_1uzd_Tests)
+# Enable CMake's testing framework
+enable_testing()
 
-# Create the test executable from your test source file(s)
+# Create the test executable
 add_executable(OOP_1uzd_Tests
         test_functions.cpp
 )
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 20)
-
-# Link the test executable to your main project library and Google Test
+# Link the test executable with your student library and Google Test
 target_link_libraries(OOP_1uzd_Tests
         PRIVATE
-        studentlib     # Replace with your actual library name from modules
-        gtest
-        gtest_main
+        studentlib
+        GTest::gtest_main   # We typically use `gtest_main` in tests
 )
+
+# Add a test so it can be run via `ctest`
+add_test(NAME AllTests COMMAND OOP_1uzd_Tests)
+
+# Optionally include test directory headers
+target_include_directories(OOP_1uzd_Tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
