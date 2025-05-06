@@ -1,20 +1,13 @@
-# Enable CMake's testing framework
-enable_testing()
+# Enable Catch2
+find_package(Catch2 2.13.7 REQUIRED)
 
 # Create the test executable
-add_executable(OOP_1uzd_Tests
-        test_functions.cpp
-)
+add_executable(MyProjectTests test_main.cpp test_functions.cpp)
 
-# Link the test executable with your student library and Google Test
-target_link_libraries(OOP_1uzd_Tests
-        PRIVATE
-        studentlib
-        GTest::gtest_main   # We typically use `gtest_main` in tests
-)
+# Link your test executable with Catch2 and your module
+target_link_libraries(MyProjectTests PRIVATE Catch2::Catch2 studentlib)
 
-# Add a test so it can be run via `ctest`
-add_test(NAME AllTests COMMAND OOP_1uzd_Tests)
-
-# Optionally include test directory headers
-target_include_directories(OOP_1uzd_Tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+# Register tests with CTest (for use with ctest)
+include(CTest)
+include(Catch)
+catch_discover_tests(MyProjectTests)

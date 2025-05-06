@@ -1,8 +1,8 @@
 //
 // Created by Anastasija Fedorenko on 2025-05-05.
 //
-#include <gtest/gtest.h>
-#include "StudentClass.h"
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 
 TEST(StudentClassTest, AverageCalculation) {
     StudentClass student;
