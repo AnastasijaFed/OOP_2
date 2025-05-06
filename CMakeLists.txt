@@ -1,21 +1,19 @@
-cmake_minimum_required(VERSION 3.20)
-project(OOP_1uzd)
+cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_CXX_STANDARD 17)
+# Set project name and language
+project(StudentProject LANGUAGES CXX)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Enable testing
-enable_testing()
-
-# Add subdirectories
+# Add subdirectory containing the studentlib
 add_subdirectory(modules)
 
+# Add the main executable
+add_executable(main
+        main.cpp  # replace with your actual main source file
+)
 
-# Add main executable
-add_executable(OOP_1uzd main.cpp)
-
-# Link to the studentlib (module library)
-target_link_libraries(OOP_1uzd PRIVATE studentlib)
-
-add_subdirectory(tests)
-
+# Link the executable with the static library
+target_link_libraries(main PRIVATE studentlib)
