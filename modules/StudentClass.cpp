@@ -233,21 +233,21 @@ vector<StudentClass> StudentClass::testClass() {
     return students;
 }
 
-bool StudentClass::compareByNameClass(StudentClass a, StudentClass b) {
-    return a.name < b.name;
+ bool StudentClass::compareByNameClass(StudentClass a, StudentClass b) {
+    return a.getName() < b.getName();
 }
 
-bool StudentClass::compareBySurnameClass(StudentClass a, StudentClass b) {
-    return a.surname < b.surname;
+ bool StudentClass::compareBySurnameClass(StudentClass a, StudentClass b) {
+    return a.getSurname() < b.getSurname();
 }
 
 bool StudentClass::compareByAverageClass(StudentClass a, StudentClass b) {
     return a.getFinalGrade() < b.getFinalGrade();
 }
 
+
 vector<StudentClass> StudentClass::sortByNameClass(vector<StudentClass> students) {
-    sort(students.begin(), students.end(), [this](StudentClass a, StudentClass b) { return this->compareByNameClass(a, b); });
-    printStudentListClass(students);
+    std::sort(students.begin(), students.end(), StudentClass::compareByNameClass);
     return students;
 }
 
