@@ -1,7 +1,99 @@
+
 v1.5
 
-Programa buvo papildyta nauja klase Human, o klasė StudentClass tapo išvestine 
+Programa buvo papildyta nauja klase Human, o klasė StudentClass tapo išvestine
 iš jos. Abstrakčios klasės objektai negali būti sukurti:
+<img width="376" alt="Screenshot 2025-04-22 at 17 23 44" src="https://github.com/user-attachments/assets/db4d48da-3ff4-4ca7-a95e-5c91f9dc45f8" />
+
+Taigi, matome, kad bandant sukurti abstrakčios klasės Human objektą, pasirodo klaida, neleidžianti to padaryti.
+
+Kadangi dabar StudentClass klasė yra išvestinė, taip pat teko pakeisti ir "Rule of Five" metodus.
+Pavyzdžiui, move konstruktorius dabar atrodo taip:
+````
+//Human.h failas
+ Human(Human&& student) noexcept : name(move(student.name)), surname(move(student.surname)) {}
+````
+
+````
+//StudentClass.h failas
+StudentClass(StudentClass&& student) noexcept
+        : Human(move(student)),
+          grades(move(student.grades)),
+          exam_grade(student.exam_grade),
+          final_grade(student.final_grade) {
+        student.exam_grade = 0.0;
+        student.final_grade = 0.0;
+        student.grades.clear();
+        student.name.clear();
+        student.surname.clear();
+      }
+````
+Kadangi, StudentClass klasė dabar yra sudaryta iš dviejų dalių (StudentClass+Human), mes kode turime nurodyti, ką daryti su Human dalimi. Taip pat mes tai darome konstruktoriuose:
+
+````
+ //default konstruktorius
+      StudentClass() : Human(), grades{}, exam_grade(0), final_grade(0) {}
+````
+
+````
+  //konstruktorius
+      StudentClass(string name, string surname, vector<double> grades, double exam_grade, double finalGrade)
+          : Human(name, surname),
+            grades(grades),
+            exam_grade(exam_grade),
+            final_grade(finalGrade) {}
+
+````
+
+````
+  //copy konstruktorius
+      StudentClass(const StudentClass &student)
+    : Human(student.getName(), student.getSurname()),
+      grades(student.grades),
+      exam_grade(student.exam_grade),
+      final_grade(student.final_grade) {}
+````
+
+Ir priskyrimo operatoriuose:
+
+````
+//copy asignment operator
+      StudentClass& operator=(const StudentClass &student) {
+        if (this == &student) return *this;
+        Human::setName(student.getName());
+        Human::setSurname(student.getSurname());
+        grades = student.grades;
+        exam_grade = student.exam_grade;
+        final_grade = student.final_grade;
+        return *this;
+      }
+````
+
+
+````
+//Human.h
+Human& operator=(Human&& other) noexcept {
+        if (this == &other) return *this;
+        name = std::move(other.name);
+        surname = std::move(other.surname);
+        return *this;
+    }
+
+//StudentClass.h
+StudentClass& operator=(StudentClass&& student) noexcept {
+        if (this == &student) return *this;
+        Human::operator=(move(student));
+        grades = move(student.grades);
+        exam_grade = student.exam_grade;
+        final_grade = student.final_grade;
+        student.exam_grade = 0;
+        student.final_grade = 0;
+        return *this;
+      }
+````
+<img width="509" alt="Screenshot 2025-04-22 at 18 01 53" src="https://github.com/user-attachments/assets/60bd9687-aec8-4cc0-836d-a121acbcbcc3" />
+
+Taigi, atlikus šiuos pakeitimus, matome, kad visi "Rule of Five" metodai veikia atlikus testavimą.
 
 
 
