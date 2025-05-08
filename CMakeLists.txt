@@ -9,6 +9,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add subdirectory containing the studentlib
 add_subdirectory(modules)
+add_subdirectory(thirdparty/googletest)
+
+enable_testing()
+
+# Add your test directory
+add_subdirectory(tests)
 
 # Add the main executable
 add_executable(main
