@@ -151,6 +151,8 @@ using namespace std;
             return is;
           }
       ~StudentClass() {
+            name.clear();
+            surname.clear();
             grades.clear();
             exam_grade = 0;
             final_grade = 0;
